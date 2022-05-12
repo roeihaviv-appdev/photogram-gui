@@ -3,6 +3,7 @@ class UsersController < ApplicationController
   def index
     matching_users = User.all
     @list_of_users = matching_users.order ({ :username => :asc })
+   
     render({ :template => "user_templates/index.html.erb" })
   end
 
@@ -38,8 +39,20 @@ class UsersController < ApplicationController
   end
 
   def update
+
+    input_username = params.fetch("input_username")
+
+    a_new_user = User.new
+
+    a_new_user.username = input_username
+
+    a_new_user.save
+
+    next_url = "/users/" + a_new_user.username.to_s
+
+    redirect_to(next_url)
   
-    render({ :template => "user_templates/update.html.erb" })
+    # render({ :template => "user_templates/update.html.erb" })
   end
 
 end
